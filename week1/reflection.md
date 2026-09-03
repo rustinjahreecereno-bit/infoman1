@@ -1,0 +1,5 @@
+# Reflection
+
+Before this lab, I thought a database was mainly just a place where information is stored. After using MySQL, I realized that a database can do much more than simply keep files. One advantage of the database approach is that it makes information easier to organize and manage. Instead of having separate files that can contain duplicated or inconsistent data, a DBMS can keep related information in a structured way. For example, student and course information can eventually be connected through relationships.
+
+If this database were used for real student records, I think the DBA responsibility that would become important first is **database security**. Student information should not be accessible to everyone, especially personal and academic records. The DBA would need to control who can access the database and what they are allowed to do. This connects to the advantage of using a DBMS because the system provides ways to manage users and permissions instead of relying only on files and folders. Keeping the data organized is important, but protecting that data is just as important once real students' information is stored.
