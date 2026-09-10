@@ -1,0 +1,7 @@
+# Week 5 Reflection
+
+In this activity, I learned how SELECT statements can be used to retrieve information from a database without changing the data. I used SELECT to display all the columns from the pet table and then selected only specific columns, such as the pet name and species. I also used WHERE conditions to filter the results and comparison operators to find pets based on their age and appointments based on their date.
+
+One thing I noticed while doing the activity was the difference between retrieving data and changing the database structure. SELECT is safer because it only reads the existing records. It does not add, delete, or modify data like INSERT, DELETE, UPDATE, or DDL commands can.
+
+For the deliberate mismatch, I changed "Dog" to lowercase "dog" in the WHERE condition. I expected the result might be different, but MySQL still returned Buddy and Max. This showed me that the text comparison was case-insensitive under the current database settings. I diagnosed this by comparing the correct and mismatched queries and looking at their actual results. This activity helped me understand how conditions affect SELECT results and why checking the actual output is important when debugging SQL.
