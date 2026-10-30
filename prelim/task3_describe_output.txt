@@ -1,0 +1,30 @@
+Field	Type	Null	Key	Default	Extra
+location_code	varchar(10)	NO	PRI	NULL	
+description	varchar(100)	NO		NULL	
+Field	Type	Null	Key	Default	Extra
+member_id	int	NO	PRI	NULL	
+member_name	varchar(100)	NO		NULL	
+phone	varchar(20)	YES		NULL	
+join_date	date	NO		NULL	
+Field	Type	Null	Key	Default	Extra
+cert_id	int	NO	PRI	NULL	
+cert_name	varchar(100)	NO		NULL	
+Field	Type	Null	Key	Default	Extra
+tool_id	int	NO	PRI	NULL	
+tool_name	varchar(100)	NO		NULL	
+category	varchar(50)	NO		NULL	
+purchase_date	date	NO		NULL	
+location_code	varchar(10)	NO	MUL	NULL	
+Field	Type	Null	Key	Default	Extra
+borrow_id	int	NO	PRI	NULL	
+member_id	int	NO	MUL	NULL	
+tool_id	int	NO	MUL	NULL	
+borrow_date	date	NO		NULL	
+return_date	date	YES		NULL	
+Field	Type	Null	Key	Default	Extra
+member_id	int	NO	PRI	NULL	
+cert_id	int	NO	PRI	NULL	
+completion_date	date	NO		NULL	
+Field	Type	Null	Key	Default	Extra
+tool_id	int	NO	PRI	NULL	
+cert_id	int	NO	PRI	NULL	
