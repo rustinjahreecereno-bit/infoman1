@@ -1,0 +1,34 @@
+mysql> SOURCE C:/Users/RUSTIN JAHREE CERENO/OneDrive/Documents/infoman1/week08/task3.sql;
++-------------+-----------+----------------+---------------------+
+| department  | headcount | average_salary | distinct_job_titles |
++-------------+-----------+----------------+---------------------+
+| Engineering |       125 |   75160.000000 |                   3 |
+| Finance     |        69 |   79513.043478 |                   3 |
+| HR          |        50 |   62610.000000 |                   3 |
+| Sales       |       144 |   71799.652778 |                   3 |
+| Support     |       112 |   44028.571429 |                   3 |
++-------------+-----------+----------------+---------------------+
+5 rows in set (0.006 sec)
+
++-------------+----------------------+-----------+
+| department  | job_title            | headcount |
++-------------+----------------------+-----------+
+| Engineering | DevOps Engineer      |        42 |
+| Engineering | QA Analyst           |        39 |
+| Engineering | Software Engineer    |        44 |
+| Finance     | Accountant           |        21 |
+| Finance     | Finance Manager      |        24 |
+| Finance     | Financial Analyst    |        24 |
+| HR          | HR Manager           |        18 |
+| HR          | HR Specialist        |        20 |
+| HR          | Recruiter            |        12 |
+| Sales       | Account Manager      |        50 |
+| Sales       | Sales Manager        |        49 |
+| Sales       | Sales Representative |        45 |
+| Support     | Support Agent        |        40 |
+| Support     | Support Lead         |        29 |
+| Support     | Support Specialist   |        43 |
++-------------+----------------------+-----------+
+15 rows in set (0.008 sec)
+
+mysql> notee
