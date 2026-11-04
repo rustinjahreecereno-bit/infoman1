@@ -1,0 +1,21 @@
+mysql> SOURCE C:/Users/RUSTIN JAHREE CERENO/OneDrive/Documents/infoman1/week08/task4.sql;
++-------------+----------------+
+| department  | average_salary |
++-------------+----------------+
+| Finance     |   79513.043478 |
+| Engineering |   75160.000000 |
+| Sales       |   71799.652778 |
++-------------+----------------+
+3 rows in set (0.010 sec)
+
++-------------+------------------+
+| department  | active_headcount |
++-------------+------------------+
+| Sales       |              116 |
+| Engineering |              104 |
+| Support     |               99 |
+| Finance     |               52 |
++-------------+------------------+
+4 rows in set (0.006 sec)
+
+mysql> notee
