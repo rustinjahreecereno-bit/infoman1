@@ -1,0 +1,78 @@
+mysql> SOURCE C:/Users/RUSTIN JAHREE CERENO/OneDrive/Documents/infoman1/week9/week9_queries.sql;
+Query OK, 0 rows affected (0.003 sec)
+
++--------------+---------+----------+------------+
+| student_name | program | order_id | order_date |
++--------------+---------+----------+------------+
+| Ana Cruz     | BSIT    |      101 | 2026-08-10 |
+| Ana Cruz     | BSIT    |      102 | 2026-08-15 |
+| Dan Reyes    | BSIT    |      103 | 2026-08-16 |
++--------------+---------+----------+------------+
+3 rows in set (0.004 sec)
+
+Query OK, 0 rows affected (0.001 sec)
+
+Query OK, 0 rows affected (0.001 sec)
+
++--------------+---------+----------+------------+
+| student_name | program | order_id | order_date |
++--------------+---------+----------+------------+
+| Ana Cruz     | BSIT    |      101 | 2026-08-10 |
+| Ana Cruz     | BSIT    |      102 | 2026-08-15 |
+| Ben Lim      | BSCS    |     NULL | NULL       |
+| Cara Yu      | BSIS    |     NULL | NULL       |
+| Dan Reyes    | BSIT    |      103 | 2026-08-16 |
++--------------+---------+----------+------------+
+5 rows in set (0.003 sec)
+
+Query OK, 0 rows affected (0.001 sec)
+
++--------------+---------+
+| student_name | program |
++--------------+---------+
+| Ben Lim      | BSCS    |
+| Cara Yu      | BSIS    |
++--------------+---------+
+2 rows in set (0.002 sec)
+
+Query OK, 0 rows affected (0.001 sec)
+
++--------------+---------+----------+--------------+----------+-------+------------+
+| student_name | program | order_id | item_name    | quantity | price | line_total |
++--------------+---------+----------+--------------+----------+-------+------------+
+| Ana Cruz     | BSIT    |      101 | Iced Tea     |        1 | 30.00 |      30.00 |
+| Ana Cruz     | BSIT    |      101 | Siomai Rice  |        2 | 65.00 |     130.00 |
+| Ana Cruz     | BSIT    |      102 | Burger Steak |        1 | 89.00 |      89.00 |
+| Dan Reyes    | BSIT    |      103 | Siomai Rice  |        1 | 65.00 |      65.00 |
++--------------+---------+----------+--------------+----------+-------+------------+
+4 rows in set (0.003 sec)
+
+Query OK, 0 rows affected (0.001 sec)
+
+Query OK, 0 rows affected (0.001 sec)
+
++--------------+--------------+------------+
+| student_name | item_name    | line_total |
++--------------+--------------+------------+
+| Dan Reyes    | Siomai Rice  |      65.00 |
+| Ana Cruz     | Burger Steak |      89.00 |
+| Ana Cruz     | Iced Tea     |      30.00 |
+| Ana Cruz     | Siomai Rice  |     130.00 |
+| Ben Lim      | NULL         |       NULL |
+| Cara Yu      | NULL         |       NULL |
++--------------+--------------+------------+
+6 rows in set (0.003 sec)
+
+Query OK, 0 rows affected (0.001 sec)
+
++--------------+--------------+------------+
+| student_name | item_name    | line_total |
++--------------+--------------+------------+
+| Dan Reyes    | Siomai Rice  |      65.00 |
+| Ana Cruz     | Burger Steak |      89.00 |
+| Ana Cruz     | Iced Tea     |      30.00 |
+| Ana Cruz     | Siomai Rice  |     130.00 |
++--------------+--------------+------------+
+4 rows in set (0.003 sec)
+
+mysql> notee
