@@ -1,0 +1,191 @@
+mysql> SELECT *
+    -> FROM products
+    -> WHERE product_id IN (6, 7)
+    -> ORDER BY product_id;
++------------+-----------------------+--------------+--------+----------------+--------+----------------+
+| product_id | product_name          | sku          | price  | stock_quantity | status | contact_number |
++------------+-----------------------+--------------+--------+----------------+--------+----------------+
+|          6 | Scientific Calculator | CALC-SCI-001 | 875.00 |             20 | Active | NULL           |
+|          7 | Compass               | CMP-001      | 120.00 |             50 | Active | NULL           |
++------------+-----------------------+--------------+--------+----------------+--------+----------------+
+2 rows in set (0.012 sec)
+
+mysql> SELECT *
+    -> FROM products
+    -> WHERE product_id = 6;
++------------+-----------------------+--------------+--------+----------------+--------+----------------+
+| product_id | product_name          | sku          | price  | stock_quantity | status | contact_number |
++------------+-----------------------+--------------+--------+----------------+--------+----------------+
+|          6 | Scientific Calculator | CALC-SCI-001 | 875.00 |             20 | Active | NULL           |
++------------+-----------------------+--------------+--------+----------------+--------+----------------+
+1 row in set (0.004 sec)
+
+mysql> SELECT *
+    -> FROM products
+    -> WHERE product_id = 5;
+Empty set (0.004 sec)
+
+mysql> SELECT
+    ->     e.employee_name AS employee_name,
+    ->     m.employee_name AS manager_name
+    -> FROM employees AS e
+    -> LEFT JOIN employees AS m
+    ->     ON e.manager_id = m.employee_id
+    -> ORDER BY e.employee_id;
++---------------+--------------+
+| employee_name | manager_name |
++---------------+--------------+
+| Lea Ramos     | NULL         |
+| Carlo Reyes   | Lea Ramos    |
+| Dana Cruz     | Lea Ramos    |
++---------------+--------------+
+3 rows in set (0.012 sec)
+
+mysql> SELECT
+    ->     c.color_name,
+    ->     s.size_name
+    -> FROM colors AS c
+    -> CROSS JOIN sizes AS s
+    -> ORDER BY c.color_name, s.size_name;
++------------+-----------+
+| color_name | size_name |
++------------+-----------+
+| Blue       | L         |
+| Blue       | M         |
+| Blue       | S         |
+| Green      | L         |
+| Green      | M         |
+| Green      | S         |
+| Red        | L         |
+| Red        | M         |
+| Red        | S         |
++------------+-----------+
+9 rows in set (0.008 sec)
+
+mysql> SELECT COUNT(*) AS total_combinations
+    -> FROM colors AS c
+    -> CROSS JOIN sizes AS s;
++--------------------+
+| total_combinations |
++--------------------+
+|                  9 |
++--------------------+
+1 row in set (0.093 sec)
+
+mysql> SHOW CREATE TABLE products\G
+*************************** 1. row ***************************
+       Table: products
+Create Table: CREATE TABLE `products` (
+  `product_id` int NOT NULL AUTO_INCREMENT,
+  `product_name` varchar(100) NOT NULL,
+  `sku` varchar(30) DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `stock_quantity` int DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `contact_number` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`product_id`),
+  UNIQUE KEY `uq_products_sku` (`sku`),
+  CONSTRAINT `chk_products_price` CHECK ((`price` > 0))
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+1 row in set (0.007 sec)
+
+mysql> INSERT INTO products
+    ->     (product_name, sku, price, stock_quantity, status, contact_number)
+    -> VALUES
+    ->     ('NOT NULL Evidence Test', 'EVID-NN-001', 5.00, 1, 'Active', '09170000011');
+Query OK, 1 row affected (0.023 sec)
+
+mysql> SELECT *
+    -> FROM products
+    -> WHERE sku = 'EVID-NN-001';
++------------+------------------------+-------------+-------+----------------+--------+----------------+
+| product_id | product_name           | sku         | price | stock_quantity | status | contact_number |
++------------+------------------------+-------------+-------+----------------+--------+----------------+
+|         12 | NOT NULL Evidence Test | EVID-NN-001 |  5.00 |              1 | Active | 09170000011    |
++------------+------------------------+-------------+-------+----------------+--------+----------------+
+1 row in set (0.005 sec)
+
+mysql> INSERT INTO products
+    ->     (product_name, sku, price, stock_quantity, status, contact_number)
+    -> VALUES
+    ->     (NULL, 'EVID-NN-002', 5.00, 1, 'Active', '09170000012');
+ERROR 1048 (23000): Column 'product_name' cannot be null
+mysql> INSERT INTO products
+    ->     (product_name, sku, price, stock_quantity, status, contact_number)
+    -> VALUES
+    ->     ('UNIQUE Evidence Test', 'EVID-UNQ-001', 5.00, 1, 'Active', '09170000013');
+Query OK, 1 row affected (0.014 sec)
+
+mysql> SELECT *
+    -> FROM products
+    -> WHERE sku = 'EVID-UNQ-001';
++------------+----------------------+--------------+-------+----------------+--------+----------------+
+| product_id | product_name         | sku          | price | stock_quantity | status | contact_number |
++------------+----------------------+--------------+-------+----------------+--------+----------------+
+|         13 | UNIQUE Evidence Test | EVID-UNQ-001 |  5.00 |              1 | Active | 09170000013    |
++------------+----------------------+--------------+-------+----------------+--------+----------------+
+1 row in set (0.006 sec)
+
+mysql> INSERT INTO products
+    ->     (product_name, sku, price, stock_quantity, status, contact_number)
+    -> VALUES
+    ->     ('Duplicate Evidence Test', 'EVID-UNQ-001', 5.00, 1, 'Active', '09170000014');
+ERROR 1062 (23000): Duplicate entry 'EVID-UNQ-001' for key 'products.uq_products_sku'
+mysql> INSERT INTO products
+    ->     (product_name, sku, price, stock_quantity, status, contact_number)
+    -> VALUES
+    ->     ('CHECK Evidence Test', 'EVID-CHK-001', 5.00, 1, 'Active', '09170000015');
+Query OK, 1 row affected (0.022 sec)
+
+mysql> SELECT *
+    -> FROM products
+    -> WHERE sku = 'EVID-CHK-001';
++------------+---------------------+--------------+-------+----------------+--------+----------------+
+| product_id | product_name        | sku          | price | stock_quantity | status | contact_number |
++------------+---------------------+--------------+-------+----------------+--------+----------------+
+|         15 | CHECK Evidence Test | EVID-CHK-001 |  5.00 |              1 | Active | 09170000015    |
++------------+---------------------+--------------+-------+----------------+--------+----------------+
+1 row in set (0.005 sec)
+
+mysql> SELECT *
+    -> FROM products
+    -> WHERE sku = 'EVID-CHK-002';
+Empty set (0.006 sec)
+
+mysql> INSERT INTO products
+    ->     (product_name, sku, price, stock_quantity, status, contact_number)
+    -> VALUES
+    ->     ('Invalid CHECK Evidence Test', 'EVID-CHK-002', 0.00, 1, 'Active', '09170000016');
+ERROR 3819 (HY000): Check constraint 'chk_products_price' is violated.
+
+mysql> SELECT *
+    -> FROM products
+    -> WHERE sku = 'EVID-CHK-002';
+Empty set (0.006 sec)
+
+mysql> SELECT product_id, product_name, sku
+    -> FROM products
+    -> WHERE sku IN (
+    ->     'EVID-NN-001',
+    ->     'EVID-UNQ-001',
+    ->     'EVID-CHK-001'
+    -> )
+    -> ORDER BY product_id;
++------------+------------------------+--------------+
+| product_id | product_name           | sku          |
++------------+------------------------+--------------+
+|         12 | NOT NULL Evidence Test | EVID-NN-001  |
+|         13 | UNIQUE Evidence Test   | EVID-UNQ-001 |
+|         15 | CHECK Evidence Test    | EVID-CHK-001 |
++------------+------------------------+--------------+
+3 rows in set (0.006 sec)
+
+mysql> DELETE FROM products
+    -> WHERE product_id IN (12, 13, 15);
+Query OK, 3 rows affected (0.022 sec)
+
+mysql> SELECT *
+    -> FROM products
+    -> WHERE product_id IN (12, 13, 15);
+Empty set (0.007 sec)
+
