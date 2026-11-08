@@ -1,0 +1,283 @@
+mysql> USE infoman1_normalization;
+Database changed
+mysql> SELECT
+    ->     dept_id,
+    ->     department_name,
+    ->     COUNT(*) AS rows_to_update
+    -> FROM student_enrollment
+    -> WHERE dept_id = 'D01'
+    -> GROUP BY dept_id, department_name;
++---------+-------------------+----------------+
+| dept_id | department_name   | rows_to_update |
++---------+-------------------+----------------+
+| D01     | Computing Studies |              3 |
++---------+-------------------+----------------+
+1 row in set (0.266 sec)
+
+mysql> SELECT
+    ->     'IT103' AS course_id,
+    ->     'Intro to Networks' AS course_title,
+    ->     'D01' AS dept_id,
+    ->     'Computing Studies' AS department_name,
+    ->     NULL AS student_id,
+    ->     NULL AS student_name,
+    ->     NULL AS enrolled_courses,
+    ->     NULL AS grade;
++-----------+-------------------+---------+-------------------+------------+--------------+------------------+-------+
+| course_id | course_title      | dept_id | department_name   | student_id | student_name | enrolled_courses | grade |
++-----------+-------------------+---------+-------------------+------------+--------------+------------------+-------+
+| IT103     | Intro to Networks | D01     | Computing Studies |       NULL |         NULL |             NULL |  NULL |
++-----------+-------------------+---------+-------------------+------------+--------------+------------------+-------+
+1 row in set (0.015 sec)
+
+mysql> SELECT
+    ->     course_id,
+    ->     course_title,
+    ->     dept_id,
+    ->     department_name
+    -> FROM student_enrollment
+    -> WHERE course_id = 'IT103';
+Empty set (0.005 sec)
+
+mysql> SELECT
+    ->     'IT103' AS course_id,
+    ->     'Intro to Networks' AS course_title,
+    ->     'D01' AS dept_id,
+    ->     'Computing Studies' AS department_name,
+    ->     NULL AS student_id,
+    ->     NULL AS student_name,
+    ->     NULL AS enrolled_courses,
+    ->     NULL AS grade;
++-----------+-------------------+---------+-------------------+------------+--------------+------------------+-------+
+| course_id | course_title      | dept_id | department_name   | student_id | student_name | enrolled_courses | grade |
++-----------+-------------------+---------+-------------------+------------+--------------+------------------+-------+
+| IT103     | Intro to Networks | D01     | Computing Studies |       NULL |         NULL |             NULL |  NULL |
++-----------+-------------------+---------+-------------------+------------+--------------+------------------+-------+
+1 row in set (0.004 sec)
+
+mysql> SELECT
+    ->     course_id,
+    ->     course_title,
+    ->     dept_id,
+    ->     department_name
+    -> FROM student_enrollment
+    -> WHERE course_id = 'IT103';
+Empty set (0.010 sec)
+
+mysql> SELECT
+    ->     student_id,
+    ->     student_name,
+    ->     course_id,
+    ->     course_title,
+    ->     dept_id,
+    ->     department_name,
+    ->     grade
+    -> FROM student_enrollment
+    -> WHERE student_id = 101
+    -> AND course_id = 'IT102';
++------------+--------------+-----------+-----------------+---------+-------------------+-------+
+| student_id | student_name | course_id | course_title    | dept_id | department_name   | grade |
++------------+--------------+-----------+-----------------+---------+-------------------+-------+
+|        101 | Ana Cruz     | IT102     | Web Development | D01     | Computing Studies |  1.25 |
++------------+--------------+-----------+-----------------+---------+-------------------+-------+
+1 row in set (0.005 sec)
+
+mysql> SELECT
+    ->     course_id,
+    ->     course_title,
+    ->     COUNT(*) AS rows_containing_course
+    -> FROM student_enrollment
+    -> WHERE course_id = 'IT102'
+    -> GROUP BY course_id, course_title;
++-----------+-----------------+------------------------+
+| course_id | course_title    | rows_containing_course |
++-----------+-----------------+------------------------+
+| IT102     | Web Development |                      1 |
++-----------+-----------------+------------------------+
+1 row in set (0.017 sec)
+
+mysql> SELECT
+    ->     student_id,
+    ->     student_name,
+    ->     course_id,
+    ->     course_title,
+    ->     dept_id,
+    ->     department_name,
+    ->     grade
+    -> FROM enrollment_1nf
+    -> ORDER BY student_id, course_id;
++------------+--------------+-----------+------------------+---------+-------------------+-------+
+| student_id | student_name | course_id | course_title     | dept_id | department_name   | grade |
++------------+--------------+-----------+------------------+---------+-------------------+-------+
+|        101 | Ana Cruz     | IT101     | Database Systems | D01     | Computing Studies |  1.50 |
+|        101 | Ana Cruz     | IT102     | Web Development  | D01     | Computing Studies |  1.25 |
+|        102 | Ben Lim      | IT101     | Database Systems | D01     | Computing Studies |  1.75 |
++------------+--------------+-----------+------------------+---------+-------------------+-------+
+3 rows in set (0.006 sec)
+
+mysql> SHOW CREATE TABLE enrollment_1nf\G
+*************************** 1. row ***************************
+       Table: enrollment_1nf
+Create Table: CREATE TABLE `enrollment_1nf` (
+  `student_id` int NOT NULL,
+  `student_name` varchar(100) NOT NULL,
+  `course_id` varchar(10) NOT NULL,
+  `course_title` varchar(100) NOT NULL,
+  `dept_id` varchar(10) NOT NULL,
+  `department_name` varchar(100) NOT NULL,
+  `grade` decimal(4,2) NOT NULL,
+  PRIMARY KEY (`student_id`,`course_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+1 row in set (0.006 sec)
+
+mysql> SELECT *
+    -> FROM students
+    -> ORDER BY student_id;
++------------+--------------+
+| student_id | student_name |
++------------+--------------+
+|        101 | Ana Cruz     |
+|        102 | Ben Lim      |
++------------+--------------+
+2 rows in set (0.005 sec)
+
+mysql> SELECT *
+    -> FROM courses
+    -> ORDER BY course_id;
++-----------+------------------+---------+
+| course_id | course_title     | dept_id |
++-----------+------------------+---------+
+| IT101     | Database Systems | D01     |
+| IT102     | Web Development  | D01     |
++-----------+------------------+---------+
+2 rows in set (0.004 sec)
+
+mysql> SELECT *
+    -> FROM enrollments
+    -> ORDER BY student_id, course_id;
++------------+-----------+-------+
+| student_id | course_id | grade |
++------------+-----------+-------+
+|        101 | IT101     |  1.50 |
+|        101 | IT102     |  1.25 |
+|        102 | IT101     |  1.75 |
++------------+-----------+-------+
+3 rows in set (0.006 sec)
+
+mysql> SELECT
+    ->     s.student_id,
+    ->     s.student_name,
+    ->     c.course_id,
+    ->     c.course_title,
+    ->     c.dept_id,
+    ->     c.department_name,
+    ->     e.grade
+    -> FROM students AS s
+    -> INNER JOIN enrollments AS e
+    ->     ON s.student_id = e.student_id
+    -> INNER JOIN courses AS c
+    ->     ON e.course_id = c.course_id
+    -> ORDER BY s.student_id, c.course_id;
+ERROR 1054 (42S22): Unknown column 'c.department_name' in 'field list'
+mysql> SELECT
+    ->     s.student_id,
+    ->     s.student_name,
+    ->     c.course_id,
+    ->     c.course_title,
+    ->     d.department_name,
+    ->     e.grade
+    -> FROM students AS s
+    -> INNER JOIN enrollments AS e
+    ->     ON s.student_id = e.student_id
+    -> INNER JOIN courses AS c
+    ->     ON e.course_id = c.course_id
+    -> INNER JOIN departments AS d
+    ->     ON c.dept_id = d.dept_id
+    -> ORDER BY s.student_id, c.course_id;
++------------+--------------+-----------+------------------+-------------------+-------+
+| student_id | student_name | course_id | course_title     | department_name   | grade |
++------------+--------------+-----------+------------------+-------------------+-------+
+|        101 | Ana Cruz     | IT101     | Database Systems | Computing Studies |  1.50 |
+|        101 | Ana Cruz     | IT102     | Web Development  | Computing Studies |  1.25 |
+|        102 | Ben Lim      | IT101     | Database Systems | Computing Studies |  1.75 |
++------------+--------------+-----------+------------------+-------------------+-------+
+3 rows in set (0.009 sec)
+
+mysql> SELECT *
+    -> FROM departments
+    -> ORDER BY dept_id;
++---------+-------------------+
+| dept_id | department_name   |
++---------+-------------------+
+| D01     | Computing Studies |
++---------+-------------------+
+1 row in set (0.005 sec)
+
+mysql> 
+mysql> SELECT *
+    -> FROM courses
+    -> ORDER BY course_id;
++-----------+------------------+---------+
+| course_id | course_title     | dept_id |
++-----------+------------------+---------+
+| IT101     | Database Systems | D01     |
+| IT102     | Web Development  | D01     |
++-----------+------------------+---------+
+2 rows in set (0.004 sec)
+
+mysql> SHOW CREATE TABLE students;
++----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table    | Create Table                                                                                                                                                                                   |
++----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| students | CREATE TABLE `students` (
+  `student_id` int NOT NULL,
+  `student_name` varchar(100) NOT NULL,
+  PRIMARY KEY (`student_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.005 sec)
+
+mysql> SHOW CREATE TABLE departments;
++-------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table       | Create Table                                                                                                                                                                                           |
++-------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| departments | CREATE TABLE `departments` (
+  `dept_id` varchar(10) NOT NULL,
+  `department_name` varchar(100) NOT NULL,
+  PRIMARY KEY (`dept_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++-------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.008 sec)
+
+mysql> SHOW CREATE TABLE courses;
++---------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table   | Create Table                                                                                                                                                                                                                                                                                                                                                                        |
++---------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| courses | CREATE TABLE `courses` (
+  `course_id` varchar(10) NOT NULL,
+  `course_title` varchar(100) NOT NULL,
+  `dept_id` varchar(10) NOT NULL,
+  PRIMARY KEY (`course_id`),
+  KEY `fk_courses_department` (`dept_id`),
+  CONSTRAINT `fk_courses_department` FOREIGN KEY (`dept_id`) REFERENCES `departments` (`dept_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++---------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.004 sec)
+
+mysql> SHOW CREATE TABLE enrollments;
++-------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table       | Create Table                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
++-------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| enrollments | CREATE TABLE `enrollments` (
+  `student_id` int NOT NULL,
+  `course_id` varchar(10) NOT NULL,
+  `grade` decimal(4,2) NOT NULL,
+  PRIMARY KEY (`student_id`,`course_id`),
+  KEY `course_id` (`course_id`),
+  CONSTRAINT `enrollments_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`student_id`),
+  CONSTRAINT `enrollments_ibfk_2` FOREIGN KEY (`course_id`) REFERENCES `courses` (`course_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++-------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.006 sec)
+
+mysql> notee;
